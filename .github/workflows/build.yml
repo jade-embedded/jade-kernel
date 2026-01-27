@@ -1,0 +1,62 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build Kernel
+    runs-on: [self-hosted, Linux, X64]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29  # v4.1.6
+      
+      - name: Verify build environment
+        run: |
+          echo "=== Toolchain Information ==="
+          which aarch64-none-elf-gcc
+          aarch64-none-elf-gcc --version
+          echo ""
+          echo "=== QEMU Information ==="
+          which qemu-system-aarch64
+          qemu-system-aarch64 --version
+          echo ""
+          echo "=== Build Environment Ready ==="
+      
+      - name: Create placeholder source
+        run: |
+          mkdir -p src
+          cat > src/hello.c << 'EOF'
+          // Minimal bare-metal test for aarch64
+          void _start(void) {
+              // Infinite loop - would be replaced with real kernel code
+              while(1) {
+                  __asm__("nop");
+              }
+          }
+          EOF
+      
+      - name: Build test binary
+        run: |
+          aarch64-none-elf-gcc \
+            -march=armv8-a \
+            -mcpu=cortex-a53 \
+            -nostdlib \
+            -nostartfiles \
+            -ffreestanding \
+            -c src/hello.c \
+            -o hello.o
+          
+          aarch64-none-elf-ld \
+            -Ttext=0x40000000 \
+            hello.o \
+            -o hello.elf
+          
+          echo "=== Build Successful ==="
+          ls -lh hello.elf
+          file hello.elf
+          aarch64-none-elf-readelf -h hello.elf

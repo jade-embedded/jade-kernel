@@ -1,13 +1,18 @@
 /*
  * Jade Kernel - Main Entry
- * Placeholder for build validation
+ * Called from boot assembly after EL1 transition
  */
 
 void kernel_main(void)
 {
-    // Placeholder - will be implemented in later sprints
+    // Kernel main entry point
+    // At this point:
+    // - Running at EL1
+    // - Stack initialized
+    // - Interrupts masked
+    
+    // Idle loop for Sprint S3
     while(1) {
-        // Idle
+        __asm__ volatile("wfe");  // Wait for event
     }
 }
-

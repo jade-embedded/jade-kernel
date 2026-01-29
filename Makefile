@@ -83,7 +83,23 @@ clean:
 	@echo "Cleaning build directory"
 	@rm -rf $(BUILD_DIR)
 
-# Run in QEMU (placeholder, will be implemented after boot code)
-run: $(KERNEL_BIN)
-	@echo "QEMU execution not yet configured"
+# QEMU Configuration
+QEMU = qemu-system-aarch64
+QEMU_FLAGS = -M virt \
+             -cpu cortex-a53 \
+             -nographic \
+             -kernel $(KERNEL_BIN) \
+             -d int,cpu_reset \
+             -D qemu.log
 
+# Run in QEMU
+run: $(KERNEL_BIN)
+	@echo "Launching QEMU (5-second test, then auto-exit)..."
+	@timeout 5 $(QEMU) $(QEMU_FLAGS) || true
+	@echo ""
+	@echo "QEMU test complete. Check qemu.log for details."
+
+# Run with debug logging
+debug: $(KERNEL_BIN)
+	@echo "Launching QEMU with debug logging (Ctrl-A X to exit)..."
+	$(QEMU) $(QEMU_FLAGS) $(QEMU_DEBUG_FLAGS)

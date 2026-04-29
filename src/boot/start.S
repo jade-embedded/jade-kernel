@@ -88,8 +88,15 @@ setup_el1_stack:
     
     // Stack is now ready for function calls and C runtime
     
-    // Continue to C entry point
-    b branch_to_c
+zero_bss:
+    ldr x0, =__bss_start
+    ldr x1, =__bss_end
+    cmp x0, x1
+    beq branch_to_c
+zero_bss_loop:
+    str xzr, [x0], #8
+    cmp x0, x1
+    blt zero_bss_loop
 
 branch_to_c:
     // Branch to kernel_main() in C

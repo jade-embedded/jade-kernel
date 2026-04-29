@@ -9,10 +9,12 @@ void kernel_main(void)
     // At this point:
     // - Running at EL1
     // - Stack initialized
+    // - .bss zeroed
+    // - VBAR_EL1 installed
     // - Interrupts masked
-    
-    // Idle loop for Sprint S3
+
+    // Idle loop -- should not reach here if exception is taken
     while(1) {
-        __asm__ volatile("wfe");  // Wait for event
+        __asm__ volatile("wfe");
     }
 }

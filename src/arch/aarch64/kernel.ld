@@ -21,8 +21,23 @@ SECTIONS
 {
     . = 0x40000000;
 
-    .text : {
+    /* Boot entry -- _start must remain at binary origin */
+    .text.boot : {
         *(.text.boot)
+    } > RAM :text_seg
+
+    . = ALIGN(2K);
+
+    /* Exception vector table -- 2KB aligned per ARM DDI 0487 */
+    .vectors : {
+        __vectors_start = .;
+        *(.vectors)
+        . = ALIGN(2K);
+        __vectors_end = .;
+    } > RAM :text_seg
+
+    /* Remaining kernel code */
+    .text : {
         *(.text*)
     } > RAM :text_seg
 

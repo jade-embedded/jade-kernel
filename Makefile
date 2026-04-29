@@ -32,7 +32,9 @@ ASFLAGS = -mcpu=cortex-a53
 LDFLAGS = -nostdlib -T src/arch/aarch64/kernel.ld
 
 # Source Files (to be populated)
-ASM_SOURCES = src/boot/start.S
+ASM_SOURCES = src/boot/start.S \
+              src/arch/aarch64/vectors.S
+
 C_SOURCES = src/kernel.c
 
 # Object Files
@@ -76,7 +78,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.S
 	@echo "Assembling $<"
 	@mkdir -p $(dir $@)
-	$(CC) $(ASFLAGS) -c $< -o $@
+	$(CC) $(ASFLAGS) -x assembler-with-cpp -c $< -o $@
 
 # Clean build artifacts
 clean:
@@ -88,7 +90,7 @@ QEMU = qemu-system-aarch64
 QEMU_FLAGS = -M virt \
              -cpu cortex-a53 \
              -nographic \
-             -kernel $(KERNEL_BIN) \
+             -kernel $(KERNEL_ELF) \
              -d int,cpu_reset \
              -D qemu.log
 

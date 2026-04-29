@@ -3,7 +3,7 @@
  * ARMv8-A (AArch64) EL2 to EL1 transition
  */
 
-.section .text.boot
+.section .text.boot, "ax"
 .global _start
 
 _start:
@@ -92,11 +92,19 @@ zero_bss:
     ldr x0, =__bss_start
     ldr x1, =__bss_end
     cmp x0, x1
-    beq branch_to_c
+    beq install_vectors
 zero_bss_loop:
     str xzr, [x0], #8
     cmp x0, x1
     blt zero_bss_loop
+
+install_vectors:
+    // Install exception vector table base address into VBAR_EL1
+    // Required before any exception can be handled (ARM DDI 0487, Section D1)
+    ldr x0, =_vectors          // Load vector table base address
+    msr VBAR_EL1, x0           // Write to Vector Base Address Register
+    isb                        // Instruction sync barrier -- ensure VBAR_EL1 visible
+    // Fall through to branch_to_c
 
 branch_to_c:
     // Branch to kernel_main() in C

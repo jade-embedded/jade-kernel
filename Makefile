@@ -63,6 +63,9 @@ $(KERNEL_ELF): $(OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 # Generate flat binary from ELF
+# Note: kernel.bin is for real hardware flashing only.
+# QEMU must use kernel.elf -- flat binaries load at a fixed address
+# that does not match the linked load address (VBAR_EL1 resolves incorrectly).
 $(KERNEL_BIN): $(KERNEL_ELF)
 	@echo "Generating $@"
 	$(OBJCOPY) -O binary $< $@

@@ -1,0 +1,41 @@
+name: License Headers
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  license-check:
+    name: Check License Headers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29  # v4.1.6
+
+      - name: Check SPDX license headers
+        run: |
+          missing=$(git ls-files '*.c' '*.h' '*.S' '*.ld' '*.mk' 'Makefile' \
+            | xargs grep -L "SPDX-License-Identifier" 2>/dev/null || true)
+          if [ -n "$missing" ]; then
+            echo "ERROR: Missing SPDX license header in the following files:"
+            echo "$missing"
+            echo ""
+            echo "Add the following header as the first content in each file:"
+            echo ""
+            echo "  Block comment files (.c .h .S .ld):"
+            echo "    /*"
+            echo "     * Copyright (c) 2026 jade-embedded contributors"
+            echo "     * SPDX-License-Identifier: Apache-2.0"
+            echo "     */"
+            echo ""
+            echo "  Line comment files (Makefile *.mk):"
+            echo "    # Copyright (c) 2026 jade-embedded contributors"
+            echo "    # SPDX-License-Identifier: Apache-2.0"
+            echo ""
+            echo "See decision-license-header-format.md for placement rules."
+            exit 1
+          fi
+          echo "All in-scope files carry SPDX license header."

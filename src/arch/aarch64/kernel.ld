@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2026 jade-embedded contributors
+ * SPDX-License-Identifier: Apache-2.0
+ *
  * Jade Kernel Linker Script
  * Target: ARMv8-A (AArch64) bare-metal
  * Platform: QEMU virt machine

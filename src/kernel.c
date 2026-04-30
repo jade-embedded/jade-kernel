@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2026 jade-embedded contributors
+ * SPDX-License-Identifier: Apache-2.0
+ *
  * Jade Kernel - Main Entry
  * Called from boot assembly after EL1 transition
  */

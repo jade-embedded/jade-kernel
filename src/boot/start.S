@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2026 jade-embedded contributors
+ * SPDX-License-Identifier: Apache-2.0
+ *
  * Jade Kernel - Boot Entry Point
  * ARMv8-A (AArch64) EL2 to EL1 transition
  */

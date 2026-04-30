@@ -1,3 +1,6 @@
+# Copyright (c) 2026 jade-embedded contributors
+# SPDX-License-Identifier: Apache-2.0
+
 # Jade Kernel Build System
 # Target: ARMv8-A (AArch64) bare-metal
 # Toolchain: aarch64-none-elf-gcc

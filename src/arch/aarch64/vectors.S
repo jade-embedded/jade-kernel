@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2026 jade-embedded contributors
+ * SPDX-License-Identifier: Apache-2.0
+ *
  * vectors.S
  *
  * Purpose: ARMv8-A exception vector table for Jade Kernel

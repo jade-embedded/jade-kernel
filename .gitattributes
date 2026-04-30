@@ -1,0 +1,27 @@
+# .gitattributes
+# Enforce LF line endings for all text files.
+# Prevents CRLF contamination from Windows contributors.
+# Reference: plan-sprint-jade-kernel-s1-license-headers.md v1.0.2 T7
+
+* text=auto eol=lf
+
+# Explicit rules for known file types
+*.c     text eol=lf
+*.h     text eol=lf
+*.S     text eol=lf
+*.ld    text eol=lf
+*.mk    text eol=lf
+*.sh    text eol=lf
+*.py    text eol=lf
+*.md    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.txt   text eol=lf
+Makefile text eol=lf
+
+# Binary files -- no line ending conversion
+*.elf   binary
+*.bin   binary
+*.pdf   binary
+*.png   binary

@@ -56,3 +56,24 @@ done
 
 All 5 boots should terminate with exit code `124`.
 
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE) for the full text.
+
+Every source file in this repository carries an SPDX license header:
+
+```
+/*
+ * Copyright (c) 2026 jade-embedded contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+```
+
+See `decision-license-header-format.md` for placement rules by file type.
+
+## Contributing
+
+All contributions must include the SPDX license header above. A CI check
+enforces this on every pull request to `main`. Pull requests without the
+header will fail the `Check License Headers` status check.

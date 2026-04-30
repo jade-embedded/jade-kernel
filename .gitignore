@@ -54,3 +54,18 @@ dkms.conf
 # debug information files
 *.dwo
 qemu.log
+
+# Build output directory
+build/
+
+# Editor swap and backup files
+*.swp
+*.swo
+*~
+.*.swp
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
